@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nexova | Análisis de incidencias</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="./incidents.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Saltar al contenido</a>
+  <header>
+    <a class="brand" href="/uis/index.html">Nexova</a>
+    <nav aria-label="Navegación principal">
+      <a href="/uis/index.html">Inicio</a>
+      <a href="/uis/application.html">Talento</a>
+      <a href="/uis/backoffice/" aria-current="page">Incidencias</a>
+    </nav>
+  </header>
+  <main id="main">
+    <div class="heading">
+      <div><p class="eyebrow">Backoffice / Soporte</p><h1>Análisis de incidencias</h1></div>
+      <button id="download" type="button" disabled title="Descargar resultados CSV"><i data-lucide="download" aria-hidden="true"></i> Descargar CSV</button>
+    </div>
+    <form id="upload-form">
+      <label for="file">Archivo de incidencias</label>
+      <div class="upload-controls">
+        <input id="file" name="file" type="file" accept=".csv,text/csv" required>
+        <button id="analyze" type="submit"><i data-lucide="chart-no-axes-combined" aria-hidden="true"></i> Analizar</button>
+      </div>
+    </form>
+    <p id="message" role="status" aria-live="polite">Sin análisis cargado.</p>
+    <section id="results" hidden aria-label="Resultados del análisis">
+      <dl class="metrics">
+        <div><dt>Registros procesados</dt><dd id="total"></dd></div>
+        <div><dt>Válidos</dt><dd id="valid"></dd></div>
+        <div><dt>Inválidos / incompletos</dt><dd id="invalid"></dd></div>
+        <div><dt>Satisfacción media</dt><dd id="average"></dd></div>
+      </dl>
+      <div class="breakdowns">
+        <section><h2>Categorías</h2><table><caption>Registros válidos por categoría</caption><thead><tr><th scope="col">Categoría</th><th scope="col">Tickets</th><th scope="col">%</th></tr></thead><tbody id="categories"></tbody></table></section>
+        <section><h2>Estados</h2><table><caption>Registros válidos por estado</caption><thead><tr><th scope="col">Estado</th><th scope="col">Tickets</th><th scope="col">%</th></tr></thead><tbody id="statuses"></tbody></table></section>
+      </div>
+      <div class="breakdowns">
+        <section><h2>Satisfacción · tickets cerrados</h2><p id="scored"></p><table><caption>Distribución de puntuaciones</caption><thead><tr><th scope="col">Puntuación</th><th scope="col">Tickets</th><th scope="col">%</th></tr></thead><tbody id="satisfaction"></tbody></table></section>
+        <section><h2>Calidad de datos</h2><p id="quality"></p><table id="invalid-table"><caption>Motivos de invalidez</caption><thead><tr><th scope="col">Motivo</th><th scope="col">Registros</th></tr></thead><tbody id="reasons"></tbody></table></section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
