@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Directorio interno de proveedores de Nexova.">
+  <title>Nexova | Directorio de proveedores</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="./suppliers.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Saltar al contenido</a>
+  <header>
+    <a class="brand" href="/uis/index.html">Nexova</a>
+    <nav aria-label="Navegación principal">
+      <a href="/uis/index.html">Inicio</a>
+      <a href="/uis/application.html">Talento</a>
+      <a href="/uis/backoffice/">Incidencias</a>
+      <a href="/uis/backoffice/suppliers.html" aria-current="page">Proveedores</a>
+    </nav>
+  </header>
+  <main id="main">
+    <div class="heading">
+      <div><p class="eyebrow">Backoffice / Compras</p><h1>Directorio de proveedores</h1></div>
+      <button id="refresh" type="button" class="secondary" title="Actualizar directorio"><i data-lucide="refresh-cw" aria-hidden="true"></i> Actualizar</button>
+    </div>
+
+    <section aria-labelledby="filters-title" class="filters">
+      <h2 id="filters-title">Filtrar directorio</h2>
+      <div class="filter-controls">
+        <div>
+          <label for="country-filter">País</label>
+          <select id="country-filter">
+            <option value="">Todos los países</option>
+            <option value="Spain">Spain</option>
+            <option value="USA">USA</option>
+          </select>
+        </div>
+        <div>
+          <label for="category-filter">Categoría</label>
+          <select id="category-filter">
+            <option value="">Todas las categorías</option>
+            <option value="job_boards">Job boards</option>
+            <option value="ats_software">ATS software</option>
+            <option value="assessment_tools">Assessment tools</option>
+            <option value="training_platforms">Training platforms</option>
+            <option value="payroll_and_hr_software">Nóminas y RR. HH.</option>
+            <option value="video_interview">Entrevistas por vídeo</option>
+            <option value="background_check">Background check</option>
+            <option value="office_and_facilities">Oficina e instalaciones</option>
+            <option value="it_and_software_licenses">Software y licencias IT</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <p id="message" role="status" aria-live="polite">Cargando proveedores…</p>
+    <section aria-labelledby="suppliers-title">
+      <h2 id="suppliers-title" class="section-title">Proveedores <span id="supplier-count"></span></h2>
+      <div class="table-scroll" tabindex="0" aria-label="Tabla desplazable de proveedores">
+        <table class="supplier-table">
+          <caption>Proveedores con tarifas, renovaciones y estado actual</caption>
+          <thead><tr>
+            <th scope="col">Proveedor</th>
+            <th scope="col">País</th>
+            <th scope="col">Categorías</th>
+            <th scope="col">Tarifa mensual</th>
+            <th scope="col">Renovación</th>
+            <th scope="col">Estado y acciones</th>
+          </tr></thead>
+          <tbody id="supplier-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="create-section" aria-labelledby="create-title">
+      <h2 id="create-title">Registrar proveedor</h2>
+      <form id="create-form">
+        <div class="supplier-form-grid">
+          <div class="field">
+            <label for="name">Nombre comercial <span aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" required maxlength="120" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="country">País del contrato <span aria-hidden="true">*</span></label>
+            <select id="country" name="country" required>
+              <option value="">Seleccionar país</option>
+              <option value="Spain">Spain</option>
+              <option value="USA">USA</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="currency">Moneda del contrato</label>
+            <input id="currency" name="currency" type="text" value="" readonly aria-describedby="currency-hint">
+            <small id="currency-hint">Se determina automáticamente según el país.</small>
+          </div>
+          <div class="field">
+            <label for="monthly-rate">Tarifa mensual <span aria-hidden="true">*</span></label>
+            <input id="monthly-rate" name="monthly_rate" type="number" min="0.01" step="0.01" required inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="status">Estado <span aria-hidden="true">*</span></label>
+            <select id="status" name="status" required>
+              <option value="active">Activo</option>
+              <option value="suspended">Suspendido</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="renewal-date">Fecha de renovación</label>
+            <input id="renewal-date" name="contract_renewal_date" type="date">
+          </div>
+          <div class="field">
+            <label for="contact-email">Email de contacto</label>
+            <input id="contact-email" name="contact_email" type="email" autocomplete="email">
+          </div>
+          <div class="field field-wide">
+            <label for="notes">Observaciones internas</label>
+            <textarea id="notes" name="notes" rows="3" maxlength="1000"></textarea>
+          </div>
+        </div>
+        <fieldset class="category-fieldset">
+          <legend>Categorías <span aria-hidden="true">*</span></legend>
+          <div class="category-options">
+            <label><input type="checkbox" name="categories" value="job_boards"> Job boards</label>
+            <label><input type="checkbox" name="categories" value="ats_software"> ATS software</label>
+            <label><input type="checkbox" name="categories" value="assessment_tools"> Assessment tools</label>
+            <label><input type="checkbox" name="categories" value="training_platforms"> Training platforms</label>
+            <label><input type="checkbox" name="categories" value="payroll_and_hr_software"> Nóminas y RR. HH.</label>
+            <label><input type="checkbox" name="categories" value="video_interview"> Entrevistas por vídeo</label>
+            <label><input type="checkbox" name="categories" value="background_check"> Background check</label>
+            <label><input type="checkbox" name="categories" value="office_and_facilities"> Oficina e instalaciones</label>
+            <label><input type="checkbox" name="categories" value="it_and_software_licenses"> Software y licencias IT</label>
+          </div>
+        </fieldset>
+        <div class="form-actions">
+          <button id="create-button" type="submit"><i data-lucide="plus" aria-hidden="true"></i> Registrar proveedor</button>
+          <p id="create-message" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

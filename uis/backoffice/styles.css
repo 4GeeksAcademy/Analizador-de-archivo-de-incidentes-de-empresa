@@ -38,4 +38,55 @@ caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-pa
 .skip { position: absolute; top: -100px; left: 20px; padding: 12px; background: white; }
 .skip:focus { top: 8px; }
 [hidden] { display: none !important; }
+.secondary { background: white; color: var(--ink); border-color: var(--line); }
+.secondary:not(:disabled):hover { background: #f1f6f7; }
+.filters { padding: 0 0 20px; border-bottom: 1px solid var(--line); }
+.filter-controls { display: grid; grid-template-columns: repeat(2, minmax(180px, 280px)); gap: 16px; }
+.filter-controls label, .field label { margin-bottom: 7px; }
+select, textarea, .field input { width: 100%; min-width: 0; border: 1px solid #aebfc2; border-radius: 4px; padding: 10px 12px; color: var(--ink); background: white; font: inherit; }
+select:focus-visible, textarea:focus-visible, .field input:focus-visible { outline: 3px solid #e6ac36; outline-offset: 2px; }
+.section-title { display: flex; align-items: baseline; gap: 8px; margin: 28px 0 14px; }
+.section-title span { font-size: 14px; color: var(--muted); font-weight: 400; }
+.table-scroll { max-width: 100%; overflow-x: auto; border-top: 1px solid var(--line); }
+.table-scroll:focus-visible { outline: 3px solid #e6ac36; outline-offset: 3px; }
+.supplier-table { min-width: 940px; }
+.supplier-table th, .supplier-table td { text-align: left; vertical-align: top; }
+.supplier-table th:first-child, .supplier-table td:first-child { width: auto; }
+.supplier-table th:nth-child(1) { width: 18%; }
+.supplier-table th:nth-child(2) { width: 8%; }
+.supplier-table th:nth-child(3) { width: 20%; }
+.supplier-table th:nth-child(4) { width: 22%; }
+.supplier-table th:nth-child(5) { width: 14%; }
+.supplier-table th:nth-child(6) { width: 18%; }
+.supplier-name { font-weight: 700; }
+.supplier-meta { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.4; }
+.rate-line { margin: 0 0 8px; }
+.rate-cell input { width: 100px; min-height: 40px; padding: 8px; border: 1px solid #aebfc2; border-radius: 4px; font: inherit; }
+.icon-button { width: 40px; min-width: 40px; min-height: 40px; margin-left: 6px; padding: 8px; }
+.status-cell { display: grid; justify-items: start; gap: 8px; }
+.status-badge, .renewal-badge { display: inline-block; font-size: 12px; line-height: 1.3; font-weight: 700; }
+.status-badge { padding: 4px 8px; border-radius: 3px; }
+.status-badge.active { color: #135f3f; background: #e7f4ec; }
+.status-badge.suspended { color: #7b3c18; background: #faeee4; }
+.renewal-badge { color: #8c4315; }
+.status-action { min-height: 36px; padding: 7px 10px; font-size: 13px; }
+.create-section { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--line); }
+.create-section h2 { margin-bottom: 18px; }
+.create-section form { padding: 0; border: 0; }
+.supplier-form-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 20px; }
+.field { min-width: 0; }
+.field label { display: block; font-size: 14px; font-weight: 600; }
+.field small { display: block; margin-top: 5px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+.field input[readonly] { background: #f2f5f5; }
+.field-wide { grid-column: 1 / -1; }
+.category-fieldset { margin: 22px 0; padding: 0; border: 0; }
+.category-fieldset legend { margin-bottom: 12px; font-size: 14px; font-weight: 700; }
+.category-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 18px; }
+.category-options label { display: flex; align-items: center; gap: 9px; margin: 0; font-weight: 400; line-height: 1.4; }
+.category-options input { width: 18px; height: 18px; margin: 0; flex: 0 0 auto; accent-color: var(--accent); }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+#create-message { min-height: 24px; margin: 0; color: var(--muted); }
+#create-message.error { color: #b12727; }
+[aria-busy="true"] { opacity: .65; }
 @media (max-width: 640px) { .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } .breakdowns { grid-template-columns: 1fr; gap: 28px; } .upload-controls { align-items: stretch; flex-direction: column; } h1 { font-size: 24px; } header { gap: 10px; } nav { gap: 14px; } }
+@media (max-width: 760px) { .filter-controls, .supplier-form-grid, .category-options { grid-template-columns: 1fr; } .field-wide { grid-column: auto; } .filter-controls { gap: 12px; } }

@@ -6,10 +6,11 @@ Desde la raiz del repositorio:
 
 ```bash
 python -m pip install -r services/api/requirements.txt
-python -m flask --app services.api.app run --host 0.0.0.0 --port 5050
+python -m uvicorn services.api.app:app --host 0.0.0.0 --port 5050
 ```
 
 Backoffice: http://localhost:5050/uis/backoffice/
+Directorio de proveedores: http://localhost:5050/uis/backoffice/suppliers.html
 Aplicacion existente: http://localhost:5050/uis/index.html
 
 La API sirve ambas interfaces en el mismo origen. No abras el backoffice con
@@ -63,7 +64,7 @@ produccion. Solo conserva el ultimo CSV agregado en memoria de la instancia;
 es compartido entre clientes y desaparece al reiniciar. Una carga fallida no lo
 sustituye. No iniciar multiples workers para este modelo de almacenamiento.
 Antes de uso multiusuario se necesitan autenticacion, aislamiento de resultados
-y almacenamiento adecuado. El servidor de Flask es solo de desarrollo.
+y almacenamiento adecuado. Uvicorn se usa aqui como servidor local de desarrollo.
 
 ## Verificacion del fixture dummy
 
@@ -79,3 +80,30 @@ python scripts/analyze.py scripts/incidents-nexova.csv
 ```
 
 O desde `scripts/`, con `python analyze.py incidents-nexova.csv`.
+
+## Directorio de proveedores
+
+El directorio se sirve en la misma API FastAPI. Al iniciar, TinyDB crea
+`data/runtime/suppliers.json` y carga los 15 proveedores del contexto solo si la
+tabla esta vacia. El archivo es estado local mutable y no se versiona. Un
+reinicio conserva altas y cambios existentes.
+
+| Metodo | Ruta | Uso |
+| --- | --- | --- |
+| `GET` | `/api/suppliers` | Lista proveedores; admite `country` y `category` combinables |
+| `POST` | `/api/suppliers` | Crea proveedor validado |
+| `GET` | `/api/suppliers/{id}` | Consulta por UUID |
+| `PATCH` | `/api/suppliers/{id}` | Cambia `monthly_rate` o `status` |
+
+Los paises admitidos son `Spain` y `USA`, con moneda `EUR` y `USD`
+respectivamente. Categorias y estados deben coincidir con
+`CONTEXT-nexova.es.md`; la tarifa debe ser mayor que cero. La API genera
+`updated_at` al crear un proveedor y al actualizar su tarifa. Cambiar estado no
+modifica ese timestamp. Las entradas invalidas reciben `422`; los proveedores
+suspendidos se conservan y no existe endpoint de borrado.
+
+Para validar el backend:
+
+```bash
+python -m pytest services/api/tests
+```
