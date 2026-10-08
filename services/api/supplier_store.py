@@ -18,9 +18,11 @@ class SupplierStore:
 
     def seed_if_empty(self, suppliers: list[dict]):
         with self._lock:
-            if len(self._table) == 0:
-                for supplier in suppliers:
-                    self.create(SupplierCreate.model_validate(supplier))
+            if len(self._table) > 0:
+                return 0
+            for supplier in suppliers:
+                self.create(SupplierCreate.model_validate(supplier))
+            return len(suppliers)
 
     def list(self, country: str | None = None, category: str | None = None) -> list[Supplier]:
         with self._lock:

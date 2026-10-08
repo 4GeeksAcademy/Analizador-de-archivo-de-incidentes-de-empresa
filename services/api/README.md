@@ -5,9 +5,15 @@
 Desde la raiz del repositorio:
 
 ```bash
-python -m pip install -r services/api/requirements.txt
-python -m uvicorn services.api.app:app --host 0.0.0.0 --port 5050
+uv sync --extra dev
+uv run seed
+uv run uvicorn services.api.app:app --host 0.0.0.0 --port 5050
 ```
+
+`uv run seed` carga los 15 proveedores del contexto solo si la tabla esta vacia e
+informa cuantas filas inserto. Repetir el comando no duplica ni sobrescribe
+proveedores. Uvicorn tambien inicializa la base automaticamente si aun esta
+vacia.
 
 Backoffice: http://localhost:5050/uis/backoffice/
 Directorio de proveedores: http://localhost:5050/uis/backoffice/suppliers.html
@@ -105,5 +111,5 @@ suspendidos se conservan y no existe endpoint de borrado.
 Para validar el backend:
 
 ```bash
-python -m pytest services/api/tests
+uv run pytest services/api/tests
 ```

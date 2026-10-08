@@ -1,8 +1,1 @@
-fastapi>=0.115,<1
-python-multipart>=0.0.20,<1
-uvicorn>=0.34,<1
-tinydb>=4.8,<5
-pydantic>=2.9,<3
-email-validator>=2.2,<3
-pytest>=8,<9
-httpx>=0.27,<1
+-e .[dev]

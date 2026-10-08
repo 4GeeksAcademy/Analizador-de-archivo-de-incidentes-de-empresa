@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from pathlib import Path
 
 from services.api.app import create_app
+from services.api.seed import seed_suppliers
 
 
 @pytest.fixture
@@ -45,6 +46,13 @@ def test_startup_seeds_exactly_15_and_restarts_without_resetting_edits(tmp_path)
         suppliers = client.get("/api/suppliers").json()
         assert len(suppliers) == 15
         assert next(item for item in suppliers if item["id"] == supplier_id)["monthly_rate"] == 1300
+
+
+def test_seed_command_reports_insert_count_and_is_idempotent(tmp_path):
+    database = tmp_path / "runtime" / "suppliers.json"
+
+    assert seed_suppliers(database) == (15, 15)
+    assert seed_suppliers(database) == (0, 15)
 
 
 def test_incident_analyzer_remains_available(api_client):

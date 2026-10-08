@@ -1,1 +1,5 @@
 data/runtime/suppliers.json
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
